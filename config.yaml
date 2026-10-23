@@ -1,0 +1,129 @@
+program:
+  name: "ICDC Program"
+  version: "1.0.0"
+  environment: "production"
+  phases: [1, 2, 3, 4]
+  log_level: "INFO"
+  db_url: "sqlite:///icdc_program.db"
+
+assets:
+  cmdb_source: "internal"
+  critical_assets: ["srv-01", "srv-02", "db-01", "k8s-prod"]
+
+ws1_detect_respond:
+  siem:
+    vendor: "splunk"
+    endpoint: "https://siem.local:8089"
+    log_sources: ["firewall", "edr", "windows", "linux", "cloud"]
+  soc:
+    tiers: ["L1", "L2", "L3"]
+    shift_hours: 8
+    runbook_dir: "playbooks/soc"
+  ids_ips:
+    engine: "suricata"
+    interface: "eth0"
+    rules_path: "/etc/suricata/rules"
+  edr:
+    vendor: "crowdstrike"
+    api_endpoint: "https://api.crowdstrike.com"
+    coverage_target: 1.0
+  honeypot:
+    engine: "cowrie"
+    sensors: ["ssh", "http", "smb"]
+  misp:
+    endpoint: "https://localhost"
+    api_key: "REDACTED"
+    feed_types: ["ioc", "malware", "phishing"]
+  soar:
+    engine: "shuffle"
+    endpoint: "https://localhost:3443"
+    automation_target: 0.6
+  forensics:
+    tools: ["volatility", "ftk", "autopsy"]
+    evidence_vault: "/secure/forensics"
+
+ws2_identity_access:
+  iam:
+    provider: "okta"
+    sso_apps: ["email", "vpn", "hr", "finance", "git"]
+    mfa_required: true
+  pam:
+    vendor: "cyberark"
+    privileged_accounts: ["domain_admin", "root", "db_sys"]
+    rotation_days: 30
+  zero_trust:
+    model: "beyondcorp"
+    ztna_gateway: "https://ztna.local"
+    policy_engine: "opa"
+    microsegmentation: true
+
+ws3_vuln_offensive:
+  vuln_mgmt:
+    vendor: "qualys"
+    scan_cadence_days: 7
+    remediation_sla_days:
+      critical: 7
+      high: 30
+      medium: 90
+  pentest:
+    scope: ["external", "internal", "web", "cloud"]
+    red_team: true
+    report_format: "pdf"
+  patch_automation:
+    tool: "ansible"
+    schedule_cron: "0 2 * * 0"
+    critical_auto_apply: true
+
+ws4_network_data:
+  segmentation:
+    zones: ["dmz", "internal", "management", "iot", "guest"]
+    firewall_vendor: "paloalto"
+  waf:
+    vendor: "cloudflare"
+    protected_apps: ["web-portal", "api-gateway"]
+  email_gateway:
+    vendor: "proofpoint"
+    policies: ["spam", "phishing", "malware", "dlp"]
+  dlp:
+    vendor: "purview"
+    data_classes: ["pii", "pci", "phi", "ip"]
+  backup_dr:
+    tool: "veeam"
+    immutable: true
+    air_gap: true
+    restore_test_quarterly: true
+    rpo_hours: 1
+    rto_hours: 4
+
+ws5_cloud_devsecops:
+  cspm:
+    vendor: "wiz"
+    clouds: ["aws", "azure", "gcp"]
+  devsecops:
+    sast: ["sonarqube", "snyk"]
+    dast: ["owasp_zap", "burp"]
+    cicd: "gitlab"
+    gate_on_critical: true
+
+ws6_governance:
+  compliance:
+    frameworks: ["iso27001", "soc2", "pci_dss"]
+    grc_tool: "vanta"
+  ir_playbooks:
+    standard: "nist_800_61"
+    playbooks: ["ransomware", "phishing", "data_breach", "insider_threat", "ddos"]
+  awareness:
+    vendor: "knowbe4"
+    phishing_cadence_days: 30
+    click_rate_target: 0.05
+  vendor_risk:
+    assessment_cadence_days: 365
+    risk_tiers: ["critical", "high", "medium", "low"]
+
+metrics:
+  mttd_target_min: 15
+  mttr_target_min: 60
+  patch_sla_days: 7
+  phishing_click_target: 0.05
+  soar_automation_target: 0.6
+  dashboard_output: "dashboard.json"

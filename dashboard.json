@@ -1,0 +1,43 @@
+{
+  "generated_at": "2026-10-22T21:07:07.441551",
+  "findings_by_severity": {
+    "critical": 16,
+    "high": 50
+  },
+  "events_by_workstream": {
+    "ORCH": 80,
+    "WS1": 128,
+    "WS2": 64,
+    "WS3": 48,
+    "WS4": 80,
+    "WS5": 24,
+    "WS6": 40
+  },
+  "compliance": {
+    "iso27001:compliant": 24,
+    "iso27001:in_progress": 24,
+    "pci_dss:compliant": 24,
+    "pci_dss:in_progress": 24,
+    "soc2:compliant": 24,
+    "soc2:in_progress": 24
+  },
+  "metrics": {
+    "edr_coverage": 3.0,
+    "hosts_patched": 3.0,
+    "phishing_click_rate": 0.04,
+    "vulns_found": 2.7777777777777777
+  },
+  "targets": {
+    "mttd_target_min": 15,
+    "mttr_target_min": 60,
+    "patch_sla_days": 7,
+    "phishing_click_target": 0.05,
+    "soar_automation_target": 0.6,
+    "dashboard_output": "dashboard.json"
+  },
+  "kpi_status": {
+    "phishing_click_ok": true,
+    "soar_automation_ok": false,
+    "patch_ok": true
+  }
+}
