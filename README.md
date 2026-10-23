@@ -14,7 +14,14 @@ This tool consolidates:
 
 ## ⚙️ Architecture
 The tool uses a phased execution model (Phase 1 to 4) to deploy these modules, feeding data into a centralized SQLite database (`icdc_program.db`) and generating unified KPI dashboards.
+## 🧠 How It Works (Execution Flow)
 
+The framework operates on a centralized orchestration model:
+
+1. **Configuration:** All 25 modules are configured via `config.yaml` (defining vendors, targets, and settings).
+2. **Phased Orchestration:** The `main.py` script triggers the `orchestrator.py`, which executes the security modules in 4 distinct phases (e.g., Phase 1: SIEM/IAM, Phase 2: SOC/Network).
+3. **Data Ingestion & Logging:** Each module (Workstreams 1-6) processes its specific domain and logs events, findings, and compliance data into a centralized SQLite database (`icdc_program.db`).
+4. **Metrics & Dashboarding:** Finally, `metrics/dashboard.py` queries the database, aggregates the KPIs (like MTTR, Vulnerability counts, Phishing click rates), and generates automated JSON data and PNG charts.
 ## 🛠️ Installation & Usage (Kali Linux)
 1. Clone the repository:
    ```bash
