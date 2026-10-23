@@ -1,4 +1,5 @@
 # 🛡️ ICDC Program (All-in-One Security Framework)
+   🟥 Red Team Toolkit | For Adversary Simulation & Authorized Testing Only
 
 The **ICDC Program** is a unified, Python-based cybersecurity orchestration framework that simulates and integrates **25 different security domains** into a single dashboard.
 ![Dashboard](dashboard.png)
