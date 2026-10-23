@@ -1,6 +1,7 @@
 # 🛡️ ICDC Program (All-in-One Security Framework)
 
 The **ICDC Program** is a unified, Python-based cybersecurity orchestration framework that simulates and integrates **25 different security domains** into a single dashboard.
+![Dashboard](dashboard.png)
 
 ## 🚀 Features (The 25 Modules)
 This tool consolidates:
